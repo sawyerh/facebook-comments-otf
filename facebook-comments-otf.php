@@ -42,13 +42,25 @@ function sh_fbc_theme_scripts(){
 	wp_enqueue_script( 'jquery' );
 }
 
+// Add Facebook meta tags to the header
+add_action('wp_head', 'sh_fbc_output_meta');
 function sh_fbc_output_meta(){
 	
-	$meta = '';
+	$options = get_option( 'sh_fbc_options' );
+	$app_id = $options['app_id'];
+	$admin_ids = $options['admin_ids'];
 	
-	if( get_option('sh_fbc_admin_ids') ):
-		$meta .= '<meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID}"/>';
+	$meta = "<!-- Facebook Comments (OTF) -->\n";
+	
+	if( isset( $app_id ) && $app_id != '' ):
+		$meta .= '<meta property="fb:app_id" content="'.$app_id.'"/>';
 	endif;
+	
+	if( isset( $admin_ids ) && $admin_ids != '' ):
+		$meta .= '<meta property="fb:admins" content="'.$admin_ids.'"/>';
+	endif;
+	
+	echo $meta."\n";
 }
 
 // AJAX processing

@@ -4,8 +4,11 @@
  ******************************************************** */
 function sh_fbc_settings(){
 	?>
+
+	<?php if( !current_user_can( 'manage_options' ) ) wp_die( __( 'Insufficient permissions', 'shaken' ) ); ?>
+	
 	<div class="wrap">
-	<?php screen_icon(); ?>
+	<?php screen_icon( 'plugins' ); ?>
 	<h2>&quot;Facebook Comments (OTF)&quot; Settings</h2>
 
 		<form action="options.php" method="post">
@@ -32,7 +35,7 @@ function sh_fbc_settings_init(){
 		'sh_fbc_settings' // page to display on
 	);
 	
-	register_setting( 'sh_fbc_options', 'sh_fbc_options', 'sh_fbc_validate_options' );
+	register_setting( 'sh_fbc_options', 'sh_fbc_options', 'sh_fbc_sanitize_options' );
 	add_settings_field(
 		'sh_fbc_app_id', // id
 		'Facebook App ID',
@@ -41,7 +44,7 @@ function sh_fbc_settings_init(){
 		'sh_fbc_main' // section to display in
 	);
 	
-	register_setting( 'sh_fbc_options', 'sh_fbc_options', 'sh_fbc_validate_options' );
+	register_setting( 'sh_fbc_options', 'sh_fbc_options', 'sh_fbc_sanitize_options' );
 	add_settings_field(
 		'sh_fbc_admin_ids', // id
 		'Facebook User ID(s)',
@@ -60,7 +63,7 @@ function sh_fbc_app_id_input(){
 	$app_id = $options['app_id'];
 	
 	echo '<input id="app_id" name="sh_fbc_options[app_id]" type="text" value="'.$app_id.'" />';
-	echo '<br /><span class="description">(fb:app_id) When you implement multiple comments boxes on your site and tie them together using an app_id, the moderation settings you choose will apply to all your comments boxes. You can also manage all comments at <a href="http://developers.facebook.com/tools/comments">http://developers.facebook.com/tools/comments</a></span>';
+	echo '<br /><span class="description">(fb:app_id) When you implement multiple comments boxes on your site and tie them together using an app_id, the moderation settings you choose will apply to all your comments boxes. You can also manage all comments at <a href="http://developers.facebook.com/tools/comments">http://developers.facebook.com/tools/comments</a><br />(Example: 257559655952366)</span>';
 	
 }
 
@@ -69,14 +72,23 @@ function sh_fbc_admin_id_input(){
 	$app_id = $options['admin_ids'];
 	
 	echo '<input id="admin_ids" name="sh_fbc_options[admin_ids]" type="text" value="'.$app_id.'" />';
-	echo '<br /><span class="description">(fb:admin_ids) To add multiple moderators, separate the uids by comma without spaces.</span>';
+	echo '<br /><span class="description">(fb:admins) To add multiple moderators, separate the uids by comma without spaces.</span>';
 	
 }
 
 /*	Validation
  ******************************************************** */
-function sh_fbc_validate_options( $input ){
-	return $input;
+function sh_fbc_sanitize_options( $input ){
+	
+	$clean_options = array();
+	
+	foreach( $input as $k => $v ){
+		$clean = trim($v);
+		$clean = esc_html($v);
+		$clean_options[$k] = $clean;
+	}
+	
+	return $clean_options;
 }
 
 
