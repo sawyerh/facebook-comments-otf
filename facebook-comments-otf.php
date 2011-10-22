@@ -156,8 +156,15 @@ function fbc_comment_form($num_comments = 10, $width = 0, $app_id = '', $color =
 }
 
 // Returns comment count structured for multiple scenarios (0, 1, and multiple comments)
-function fbc_comment_count($id, $zero = '0 comments', $single = ' comment', $plural = ' comments'){
+function fbc_comment_count($id = false, $zero = '0 comments', $single = ' comment', $plural = ' comments'){
+	
 	$count = fbc_get_comment_count($id);
+	
+	// Dummy proof
+	if( !$id ){
+		echo $count;
+		return;
+	}
 	
 	if( $count ){
 		if( $count == '1' ){
@@ -174,7 +181,13 @@ function fbc_comment_count($id, $zero = '0 comments', $single = ' comment', $plu
 }
 
 // Return comment count number only
-function fbc_get_comment_count($id){
+function fbc_get_comment_count($id = false){
+	
+	// Dummy proof
+	if( !$id ){
+		return __( 'A post ID must be provided in order for a comment count to be returned. Try using $post->ID in the function call' );
+	}
+	
 	$count = get_post_meta( $id, 'fb_comment_count', true );	
 	
 	if( $count ){

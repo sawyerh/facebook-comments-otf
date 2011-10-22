@@ -6,6 +6,7 @@
 		
 		$id = $_POST['postID'];
 		
+		// A comment was deleted, so update the comment count
 		if( $_POST['doWhat'] == 'remove' ):
 	
 			if( get_post_meta( $id, 'fb_comment_count', true ) ){
@@ -15,7 +16,8 @@
 				$new_count = '0';
 			}
 			update_post_meta( $id, 'fb_comment_count', $new_count );
-			
+		
+		// A comment was added, so update the comment count and notify the post author
 		elseif( $_POST['doWhat'] == 'create' ):
 			
 			$post_title = get_the_title( $id );
