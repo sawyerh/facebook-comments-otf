@@ -133,7 +133,7 @@ function fbc_comment_form($num_comments = 10, $width = 0, $app_id = '', $color =
 			
 			// Send e-mail notification
 	        FB.Event.subscribe(\'comment.create\', function(response) {
-	            
+	            	            
 	            jQuery.post(\''.$ajax_file.'\', { 
 		            action: \'sh_fbc_ajax\',
 		            security: \''.$ajax_nonce.'\',
@@ -150,6 +150,7 @@ function fbc_comment_form($num_comments = 10, $width = 0, $app_id = '', $color =
 	        });
 	        
 	         FB.Event.subscribe(\'comment.remove\', function(response) {
+	         	
 	         	jQuery.post(\''.$ajax_file.'\', {
 	         		action: \'sh_fbc_ajax\',
 	         		security: \''.$ajax_nonce.'\',

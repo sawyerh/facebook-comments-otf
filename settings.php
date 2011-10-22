@@ -63,7 +63,7 @@ function sh_fbc_app_id_input(){
 	$app_id = $options['app_id'];
 	
 	echo '<input id="app_id" name="sh_fbc_options[app_id]" type="text" value="'.$app_id.'" />';
-	echo '<br /><span class="description">(fb:app_id) When you implement multiple comments boxes on your site and tie them together using an app_id, the moderation settings you choose will apply to all your comments boxes. You can also manage all comments at <a href="http://developers.facebook.com/tools/comments">http://developers.facebook.com/tools/comments</a><br />(Example: 257559655952366)</span>';
+	echo '<br /><span class="description">(fb:app_id) This is the best method. When using an app_id, the moderation settings you choose will apply to all your comments boxes. <a href="https://developers.facebook.com/apps">Create your App</a>. You can also manage all comments <a href="http://developers.facebook.com/tools/comments">here</a><br />(Example: 257559655952366)</span>';
 	
 }
 
