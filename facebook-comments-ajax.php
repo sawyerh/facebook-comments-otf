@@ -67,9 +67,9 @@ function sh_fbc_process_ajax(){
 		
 		// Send the email notification
 		if (wp_mail($to, $subject, $message, $headers)) {
-			echo "true";
+			return true;
 		} else {
-			echo "false";
+			return false;
 		}
 		
 	endif;
