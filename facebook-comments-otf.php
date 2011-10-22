@@ -42,6 +42,15 @@ function sh_fbc_theme_scripts(){
 	wp_enqueue_script( 'jquery' );
 }
 
+function sh_fbc_output_meta(){
+	
+	$meta = '';
+	
+	if( get_option('sh_fbc_admin_ids') ):
+		$meta .= '<meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID}"/>';
+	endif;
+}
+
 // AJAX processing
 add_action('wp_ajax_sh_fbc_ajax', 'sh_fbc_process_ajax');
 add_action('wp_ajax_nopriv_sh_fbc_ajax', 'sh_fbc_process_ajax');
@@ -160,12 +169,6 @@ function fbc_comment_count($id = false, $zero = '0 comments', $single = ' commen
 	
 	$count = fbc_get_comment_count($id);
 	
-	// Dummy proof
-	if( !$id ){
-		echo $count;
-		return;
-	}
-	
 	if( $count ){
 		if( $count == '1' ){
 			echo $count.$single;
@@ -185,7 +188,9 @@ function fbc_get_comment_count($id = false){
 	
 	// Dummy proof
 	if( !$id ){
-		return __( 'A post ID must be provided in order for a comment count to be returned. Try using $post->ID in the function call' );
+		//return __( 'A post ID must be provided in order for a comment count to be returned. Try using $post->ID in the function call' );
+		global $post;
+		$id = $post->ID;
 	}
 	
 	$count = get_post_meta( $id, 'fb_comment_count', true );	
