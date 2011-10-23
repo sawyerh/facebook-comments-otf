@@ -7,7 +7,7 @@ function sh_fbc_process_ajax(){
 	check_ajax_referer( 'hollenshead-sawyer', 'security' );
 	
 	$id = $_POST['postID'];
-	$action = $_POST['doWhat']
+	$action = $_POST['doWhat'];
 	
 	// A comment was deleted, so update the comment count
 	if( $action  == 'remove' ):
