@@ -279,5 +279,6 @@ function _fbc_get_external_count($id){
 
 require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/facebook-comments-ajax.php");
 require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/settings.php");
+require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/help.php");
 
 ?>

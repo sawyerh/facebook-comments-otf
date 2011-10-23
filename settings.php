@@ -2,7 +2,10 @@
 
 // Add the Settings page menu item
 function sh_fbc_add_page(){
-	add_options_page( 'Facebook Comments (OTF)', 'Facebook Comments', 'manage_options', 'sh_fbc_settings', 'sh_fbc_settings' );
+	
+	global $sh_fbc_settings;
+	
+	$sh_fbc_settings = 	add_options_page( 'Facebook Comments (OTF)', 'Facebook Comments', 'manage_options', 'sh_fbc_settings', 'sh_fbc_settings' );
 }
 
 /*	Display the settings page
@@ -60,7 +63,7 @@ function sh_fbc_settings_init(){
 }
 
 function sh_fbc_main_text(){
-	echo '<p>Setting one of the following options will allow the users you specify to moderate the Facbeook comments left on your site.</p>';
+	echo '<p>Setting one of the following options will allow the users you specify to moderate the Facebook comments left on your site.</p>';
 }
 
 function sh_fbc_app_id_input(){
