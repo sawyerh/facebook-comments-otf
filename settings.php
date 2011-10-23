@@ -1,5 +1,10 @@
 <?php 
 
+// Add the Settings page menu item
+function sh_fbc_add_page(){
+	add_options_page( 'Facebook Comments (OTF)', 'Facebook Comments', 'manage_options', 'sh_fbc_settings', 'sh_fbc_settings' );
+}
+
 /*	Display the settings page
  ******************************************************** */
 function sh_fbc_settings(){

@@ -28,7 +28,12 @@ define( 'SH_FBC_DIR', plugin_dir_url(__FILE__) );
 
 add_action('init',  'sh_fbc_init');
 function sh_fbc_init(){
-
+	
+	if( current_user_can( 'manage_options' ) ){
+		// Display admin pages
+		add_action( 'admin_menu', 'sh_fbc_add_page' );
+	}
+	
 	load_plugin_textdomain( 'shaken', FALSE, SH_FBC_DIR.'languages' );
 		 	
 }
@@ -65,12 +70,6 @@ function sh_fbc_output_meta(){
 // AJAX processing
 add_action('wp_ajax_sh_fbc_ajax', 'sh_fbc_process_ajax');
 add_action('wp_ajax_nopriv_sh_fbc_ajax', 'sh_fbc_process_ajax');
-
-// Add the Settings page
-add_action( 'admin_menu', 'sh_fbc_add_page' );
-function sh_fbc_add_page(){
-	add_options_page( 'Facebook Comments (OTF)', 'Facebook Comments', 'manage_options', 'sh_fbc_settings', 'sh_fbc_settings' );
-}
 
 /**
  * Output the Facebook comment form 
