@@ -58,9 +58,9 @@
 			
 			$contextual_help .= '</ul>';
 
-			$contextual_help .= '<h3>'.__('Credits / Support', 'shaken').'</h3>';
+			$contextual_help .= '<h3>Credits / Support</h3>';
 			
-			$contextual_help .= '<p>'.__( 'The Facebook Comments (OTF) plugin was created by', 'shaken' ).' <a href="http://shakenandstirredweb.com">Shaken and Stirred Web</a>. '.__( 'If you find any bugs, have feature requests, or would like to contribute, please visit the plugin\'s <a href="https://github.com/nickhamze/facebook-comments-otf">GitHub page</a>.', 'shaken').'</p>';
+			$contextual_help .= '<p>The Facebook Comments (OTF) plugin was created by <a href="http://shakenandstirredweb.com">Shaken and Stirred Web</a>. If you find any bugs, have feature requests, or would like to contribute, please visit the plugin\'s <a href="https://github.com/nickhamze/facebook-comments-otf">GitHub page</a></p>';
 			
 
 		endif;
