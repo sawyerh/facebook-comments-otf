@@ -7,9 +7,10 @@ function sh_fbc_process_ajax(){
 	check_ajax_referer( 'hollenshead-sawyer', 'security' );
 	
 	$id = $_POST['postID'];
+	$action = $_POST['doWhat']
 	
 	// A comment was deleted, so update the comment count
-	if( $_POST['doWhat'] == 'remove' ):
+	if( $action  == 'remove' ):
 		
 		/* We have to ask FB for the count, since it's too unpredictable 
 		 * when a comment has replies. This should be fine, since the removal
@@ -23,15 +24,13 @@ function sh_fbc_process_ajax(){
 		update_post_meta( $id, 'fb_comment_count', $new_count );
 	
 	// A comment was added, so update the comment count and notify the post author
-	elseif( $_POST['doWhat'] == 'create' ):
+	elseif( $action == 'create' ):
 		
 		$post_title = get_the_title( $id );
 		$post_url = get_permalink( $id );
 		
-		/* ******************************************************
-						Update the comment count
+		/*	Update the comment count
 		****************************************************** */
-		
 		if( get_post_meta( $id, 'fb_comment_count', true ) ){
 			$old_count = get_post_meta( $id, 'fb_comment_count', true );
 			$new_count = $old_count + 1;
@@ -41,10 +40,8 @@ function sh_fbc_process_ajax(){
 		update_post_meta( $id, 'fb_comment_count', $new_count );
 		
 		
-		/* ******************************************************
-						Send notification to author
+		/*	Send notification to author
 		****************************************************** */
-		
 		$to = $_POST['author'];
 		
 		$sitename = strtolower( $_SERVER['SERVER_NAME'] );
@@ -77,23 +74,23 @@ function sh_fbc_process_ajax(){
 
 /* Doesn't work, since the response doesn't provide the correct comment ID...
  * Find number of replies a comment has
- 
-function sh_fbc_get_comment_replies( $comment_id ){
-
-	// Check if the comment has replies, and return the amount if there are
-	
-	$request_url = "https://graph.facebook.com/" . $comment_id;
-    $requests = file_get_contents($request_url);
-    $requests = json_decode($requests);
- 	
- 	if( $requests->comments->count ){
- 		//return $requests->comments->count;
- 		echo $requests->comments->count;
-	} else {
-		echo 'no request';
-	}
-	
-	// If there weren't any replies, we return 0
-	return '50';
-} */
+		function sh_fbc_get_comment_replies( $comment_id ){
+		
+			// Check if the comment has replies, and return the amount if there are
+			
+			$request_url = "https://graph.facebook.com/" . $comment_id;
+		    $requests = file_get_contents($request_url);
+		    $requests = json_decode($requests);
+		 	
+		 	if( $requests->comments->count ){
+		 		//return $requests->comments->count;
+		 		echo $requests->comments->count;
+			} else {
+				echo 'no request';
+			}
+			
+			// If there weren't any replies, we return 0
+			return '50';
+		} 
+*/
 ?>
