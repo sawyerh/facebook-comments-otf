@@ -198,7 +198,7 @@ function fbc_comment_form( $args ){
 }
 
 /**
- * Outputs comment count structured for multiple scenarios (0, 1, and multiple comments) 
+ * Outputs a formatted comment count structured for multiple scenarios (0, 1, and multiple comments) 
  *
  * @since	1.0.0
  * @param 	int		$id			The post ID

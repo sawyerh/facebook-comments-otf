@@ -30,7 +30,8 @@ For updates, follow [@sawyerh](http://twitter.com/sawyerh).
 
 When you place a plugin function into your theme, you will likely want to wrap it with an `if( function_exists('FUNCTION_NAME_HERE') )` condition. This way, if the plugin gets disabled, your theme won't explode.
 
-**fbc_comment_form( $args )**:
+**fbc_comment_form( $args )**
+Outputs the Facebook comment form onto the page:
 
 $args is an optional associative array that you can implement to override the following defaults:
 
@@ -40,6 +41,19 @@ $args is an optional associative array that you can implement to override the fo
 - (string) color (light|dark, Default = light)
 - (int) id (Default = $post->ID)
 - (string) notify_email (Default = post author's e-mail)
+
+**fbc_comment_count( $id, $zero, $single, $plural )**
+Outputs a formatted comment count structured for multiple scenarios (0, 1, and multiple comments) onto the page
+
+- (int) $id - Default = $post->ID
+- (string) $zero - Default = 0 comments
+- (string) $single - Default = 1 comment
+- (string) $plural - Default = comments
+
+**fbc_get_comment_count( $id )**
+Returns only the comment count number
+
+- (int) $id - Default = $post->ID
 
 == Other Notes ==
 
