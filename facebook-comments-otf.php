@@ -27,7 +27,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 define( 'SH_FBC_DIR', plugin_dir_url(__FILE__) );
 
 add_action('init',  'sh_fbc_init');
-
 function sh_fbc_init(){
 
 	load_plugin_textdomain( 'shaken', FALSE, SH_FBC_DIR.'languages' );
@@ -74,19 +73,26 @@ function sh_fbc_add_page(){
 }
 
 /**
- * social_bartender
+ * Output the Facebook comment form 
  *
- * Outputs the links with an image or title inside 
- *
- * @param string		$link_before 	Sets the text or html that precedes the <a> tag.
- * @param string		$link_after 	Sets the text or html that follows the <a> tag.
- * @param string		$echo 			Echo the content if true (1) or return if false (0)
- *
- * @return string
-*/
-function fbc_comment_form($num_comments = 10, $width = 0, $app_id = '', $color = 'light', $id = false, $notify_email = false){
+ * @since	1.0.0
+ * @param 	string|array	$args 	Override the defaults (num_comments, width, app_id, color, id, notify_email)
+ */
+function fbc_comment_form( $args ){
 	
-	// Who should be notified of new comments?
+	$defaults = array(
+		'num_comments' => 10,
+		'width' => false,
+		'app_id' => false,
+		'color' => 'light',
+		'id' => false,
+		'notify_email' => false
+	);
+	
+	$args = wp_parse_args( $args, $defaults );
+	extract( $args, EXTR_SKIP );
+	
+	// E-mail to send notification of new comments
 	if( $notify_email ){
 		$author = $notify_email;
 	} else {
@@ -94,25 +100,40 @@ function fbc_comment_form($num_comments = 10, $width = 0, $app_id = '', $color =
 		$author = get_the_author_meta('user_email', $authordata->ID);
 	}
 	
+	// Post ID
 	if( !$id ){
 		global $post;
 		$id = $post->ID;
 	}
 	
-	// How wide should the form be?
+	// App ID
+	$options = get_option( 'sh_fbc_options' );
+	$app_id_option = $options['app_id'];
+	
+	if( $app_id ){
+		$app_id = $app_id;
+	} elseif( $app_id_option ){
+		$app_id = $app_id_option;
+	} else{
+		$app_id = '';
+	}
+	
+	// Width of comment form
 	global $content_width;
 	
-	if( $width != 0 ){
+	if( $width ){
 		$form_width = $width;
 	} elseif ( isset( $content_width ) ){
 		$form_width = $content_width;
 	} else {
 		$form_width = 500;
 	}
-
+	
+	// Ajax
 	$ajax_file = admin_url('admin-ajax.php');
 	$ajax_nonce = wp_create_nonce( 'hollenshead-sawyer' );
 	
+	// Output comment form script
 	echo '<div id="fb-root"></div>
 	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
@@ -177,14 +198,22 @@ function fbc_comment_form($num_comments = 10, $width = 0, $app_id = '', $color =
 	<div class="fb-comments" notify="true" data-href="'.get_permalink( $id ).'" data-num-posts="'.$num_comments.'" data-width="'.$form_width.'" data-colorscheme="'.$color.'"></div>';
 }
 
-// Returns comment count structured for multiple scenarios (0, 1, and multiple comments)
-function fbc_comment_count($id = false, $zero = '0 comments', $single = ' comment', $plural = ' comments'){
+/**
+ * Outputs comment count structured for multiple scenarios (0, 1, and multiple comments) 
+ *
+ * @since	1.0.0
+ * @param 	int		$id			The post ID
+ * @param	string	$zero		Output when there are zero comments
+ * @param	string	$single		Output when there is one comment
+ * @param	string	$plural		Appended to the count when it's over one
+ */
+function fbc_comment_count($id = false, $zero = '0 comments', $single = '1 comment', $plural = ' comments'){
 	
 	$count = fbc_get_comment_count($id);
 	
 	if( $count ){
 		if( $count == '1' ){
-			echo $count.$single;
+			echo $single;
 		} elseif( $count == '0'){
 			echo $zero;
 		} else{
@@ -196,12 +225,16 @@ function fbc_comment_count($id = false, $zero = '0 comments', $single = ' commen
 	
 }
 
-// Return comment count number only
+/**
+ * Return comment count number only
+ *
+ * @since	1.0.0
+ * @param 	int		$id		The post ID
+ * @return	int
+ */
 function fbc_get_comment_count($id = false){
 	
-	// Dummy proof
 	if( !$id ){
-		//return __( 'A post ID must be provided in order for a comment count to be returned. Try using $post->ID in the function call' );
 		global $post;
 		$id = $post->ID;
 	}
@@ -222,6 +255,13 @@ function fbc_get_comment_count($id = false){
 	}
 }
 
+/**
+ * Get comment count from Facebook API
+ *
+ * @since	1.0.0
+ * @param 	int		$id		The post ID
+ * @return	int|bool		Returns comment comment if available, otherwise returns false
+ */
 function _fbc_get_external_count($id){
 	
 	$request_url ="https://graph.facebook.com/?ids=" . get_permalink($id);
