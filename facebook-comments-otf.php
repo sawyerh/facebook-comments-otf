@@ -75,9 +75,9 @@ add_action('wp_ajax_nopriv_sh_fbc_ajax', 'sh_fbc_process_ajax');
  * Output the Facebook comment form 
  *
  * @since	1.0.0
- * @param 	string|array	$args 	Override the defaults (num_comments, width, app_id, color, id, notify_email)
+ * @param 	array	$args 	Override the defaults (num_comments, width, app_id, color, id, notify_email)
  */
-function fbc_comment_form( $args ){
+function fbc_comment_form( $args = array() ){
 	
 	$defaults = array(
 		'num_comments' => 10,
