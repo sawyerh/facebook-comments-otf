@@ -6,7 +6,7 @@
 			
 			$contextual_help = '<h2>Help - Facebook Comments OTF</h2>';
 			
-			$contextual_help .= '<p>When you place a plugin function into your theme, you will likely want to wrap it with an `if( function_exists(\'FUNCTION_NAME_HERE\') )` condition.</p>';
+			$contextual_help .= '<p>When you place a plugin function into your theme, you will likely want to wrap it with an <code>if( function_exists(\'FUNCTION_NAME_HERE\') )</code> condition.</p>';
 			
 			$contextual_help .= '<p>This way, if the plugin gets disabled, your theme won\'t explode.</p>';
 			
@@ -58,9 +58,9 @@
 			
 			$contextual_help .= '</ul>';
 
-			$contextual_help .= '<h3>Credits / Support</h3>';
+			$contextual_help .= '<h3>Contribute</h3>';
 			
-			$contextual_help .= '<p>The Facebook Comments (OTF) plugin was created by <a href="http://shakenandstirredweb.com">Shaken and Stirred Web</a>. If you find any bugs, have feature requests, or would like to contribute, please visit the plugin\'s <a href="https://github.com/nickhamze/facebook-comments-otf">GitHub page</a></p>';
+			$contextual_help .= '<p>If you find any bugs, have feature requests, or would like to contribute, please visit the plugin\'s <a href="https://github.com/sawyerh/facebook-comments-otf">GitHub page</a></p>';
 			
 
 		endif;
