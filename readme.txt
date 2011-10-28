@@ -61,6 +61,10 @@ You can contribute to this plugin on GitHub: https://github.com/sawyerh/facebook
 
 == Changelog ==
 
+= 1.1 (pending) =
+
+* Update Contextual help to work in WP 3.3
+
 = 1.0 =
 
 * Initial release
