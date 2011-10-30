@@ -6,6 +6,11 @@ function sh_fbc_add_page(){
 	global $sh_fbc_settings;
 	
 	$sh_fbc_settings = 	add_options_page( 'Facebook Comments (OTF)', 'Facebook Comments', 'manage_options', 'sh_fbc_settings', 'sh_fbc_settings' );
+	
+	// WP 3.3 Help section
+	if( version_compare( '3.3', get_bloginfo( 'version' ), '<=' ) ):
+		add_action("load-$sh_fbc_settings", 'sh_fbc_help_page');
+	endif;
 }
 
 /*	Display the settings page
